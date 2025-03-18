@@ -53,9 +53,7 @@ struct MainView: View {
             #elseif os(iOS)
             Color(.black).ignoresSafeArea()
             #endif
-            
-            // TODO: typewriter effect for quote
-            // TODO: typewriter effect for quote
+        
             QuoteView()
         }
     }

@@ -26,78 +26,80 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        if selectedTopic == nil {
-            // Full screen welcome view
-            NavigationStack {
-                WelcomeView2(quotes: quotes, onBrowseTopics: {
-                    showBrowseView()
-                })                    .navigationTitle("Philosophize")
-                    .toolbar {
-                        ToolbarItem {
-                            Button(action: { showBrowseView() }) {
-                                Label("Browse Topics", systemImage: "list.bullet")
-                            }
-                        }
-                    }
-            }
-            .sheet(isPresented: $showingAddSheet) {
-                AddNoteView()
-            }
-        } else {
-            // Split view for browsing topics
-            NavigationSplitView {
-                List {
-                    Section("Philosophy Topics") {
-                        NavigationLink("Existentialism", tag: "Existentialism", selection: $selectedTopic) {
-                            PhilosophyTopicView(topic: "Existentialism")
-                        }
-                        NavigationLink("Ethics", tag: "Ethics", selection: $selectedTopic) {
-                            PhilosophyTopicView(topic: "Ethics")
-                        }
-                        NavigationLink("Metaphysics", tag: "Metaphysics", selection: $selectedTopic) {
-                            PhilosophyTopicView(topic: "Metaphysics")
-                        }
-                        NavigationLink("Epistemology", tag: "Epistemology", selection: $selectedTopic) {
-                            PhilosophyTopicView(topic: "Epistemology")
-                        }
-                    }
-                    
-                    Section {
-                        Button("Back to Welcome") {
-                            selectedTopic = nil
-                        }
-                        .foregroundColor(.blue)
-                    }
-                    
-                    Section("My Notes") {
-                        // This will show user's saved philosophical notes later
-                        Text("You haven't added any notes yet")
-                            .foregroundColor(.secondary)
-                            .italic()
-                    }
-                }
-                .navigationTitle("Philosophize")
-    #if os(macOS)
-                .navigationSplitViewColumnWidth(min: 200, ideal: 250)
-    #endif
-                .toolbar {
-                    ToolbarItem {
-                        Button(action: { showingAddSheet = true }) {
-                            Label("Add Note", systemImage: "note.text.badge.plus")
-                        }
-                    }
-                }
-            } detail: {
-                if let topic = selectedTopic {
-                    PhilosophyTopicView(topic: topic)
-                } else {
-                    Text("Select a topic from the sidebar")
-                }
-            }
-            .sheet(isPresented: $showingAddSheet) {
-                AddNoteView()
-            }
-        }
+        WelcomeView(quotes: quotes)
+//        if selectedTopic == nil {
+//            // Full screen welcome view
+//            NavigationStack {
+//                WelcomeView2(quotes: quotes, onBrowseTopics: {
+//                    showBrowseView()
+//                })
+//                .navigationTitle("Philosophize")
+//                    .toolbar {
+//                        ToolbarItem {
+//                            Button(action: { showBrowseView() }) {
+//                                Label("Browse Topics", systemImage: "list.bullet")
+//                            }
+//                        }
+//                    }
+//            }
+//            .sheet(isPresented: $showingAddSheet) {
+//                AddNoteView()
+//            }
+//        } else {
+//            // Split view for browsing topics
+//            NavigationSplitView {
+//                List {
+//                    Section("Philosophy Topics") {
+//                        NavigationLink("Existentialism", tag: "Existentialism", selection: $selectedTopic) {
+//                            PhilosophyTopicView(topic: "Existentialism")
+//                        }
+//                        NavigationLink("Ethics", tag: "Ethics", selection: $selectedTopic) {
+//                            PhilosophyTopicView(topic: "Ethics")
+//                        }
+//                        NavigationLink("Metaphysics", tag: "Metaphysics", selection: $selectedTopic) {
+//                            PhilosophyTopicView(topic: "Metaphysics")
+//                        }
+//                        NavigationLink("Epistemology", tag: "Epistemology", selection: $selectedTopic) {
+//                            PhilosophyTopicView(topic: "Epistemology")
+//                        }
+//                    }
+//                    
+//                    Section {
+//                        Button("Back to Welcome") {
+//                            selectedTopic = nil
+//                        }
+//                        .foregroundColor(.blue)
+//                    }
+//                    
+//                    Section("My Notes") {
+//                        // This will show user's saved philosophical notes later
+//                        Text("You haven't added any notes yet")
+//                            .foregroundColor(.secondary)
+//                            .italic()
+//                    }
+//                }
+//                .navigationTitle("Philosophize")
+//    #if os(macOS)
+//                .navigationSplitViewColumnWidth(min: 200, ideal: 250)
+//    #endif
+//                .toolbar {
+//                    ToolbarItem {
+//                        Button(action: { showingAddSheet = true }) {
+//                            Label("Add Note", systemImage: "note.text.badge.plus")
+//                        }
+//                    }
+//                }
+//            } detail: {
+//                if let topic = selectedTopic {
+//                    PhilosophyTopicView(topic: topic)
+//                } else {
+//                    Text("Select a topic from the sidebar")
+//                }
+//            }
+//            .sheet(isPresented: $showingAddSheet) {
+//                AddNoteView()
+//            }
+//        }
     }
 }
 

@@ -26,6 +26,38 @@ struct PhilosophizeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//                .onOpenURL { url in
+//                    print("Received URL: \(url.absoluteString)")
+//                        
+//                    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+//                        print("Failed to create URL components")
+//                        return
+//                    }
+//                    
+//                    print("URL scheme: \(components.scheme ?? "none")")
+//                    print("URL host: \(components.host ?? "none")")
+//                    print("URL path: \(components.path)")
+//                    print("URL query items: \(components.queryItems ?? [])")
+//                    
+//                    guard let host = components.host else {
+//                        print("No host in URL")
+//                        return
+//                    }
+//                    
+////                    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+////                          let host = components.host else {
+////                        return
+////                    }
+////                    
+//                    switch host {
+//                    case "quote":
+//                        if let id = components.queryItems?.first(where: { $0.name == "id" })?.value {
+//                            print("Opening quote ID: \(id)")
+//                        }
+//                    default:
+//                        break
+//                    }
+//                }
         }
         .modelContainer(sharedModelContainer)
     }
