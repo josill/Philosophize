@@ -38,44 +38,14 @@ struct SplashScreen: View {
             blurRadius: 150,
             glowOpacity: 0.25
         ) {
-            ZStack {                
-                HStack {
-                    LottieView(fileName: "quote-animation", animationWidth: 40, animationHeight: 80)
-                        .frame(width: 20, height: 20)
-                        .border(Color.blue, width: 2)
-                        .offset(x: 16, y: 50)
-                    LottieView(fileName: "quote-animation", animationWidth: 40, animationHeight: 80, delay: 1)
-                        .frame(width: 20, height: 20)
-                        .border(Color.blue, width: 2)
-                        .offset(y: 50)
-                    
-                    Text("The unexamined life is not worth living. - Socrates")
-                        .font(.system(size: 18, weight: .light, design: .rounded))
-                    VStack(spacing: 10) {
-                        Text("11:23")
-                            .font(.system(size: 88, weight: .medium, design: .rounded))
-                        Text("Tuesday, 18 April")
-                            .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    }
-                        
-                    LottieView(fileName: "quote-animation", animationWidth: 40, animationHeight: 80, delay: 2)
-                        .frame(width: 20, height: 20)
-                        .border(Color.blue, width: 2)
-                        .offset(x: -20, y: 20)
-                    LottieView(fileName: "quote-animation", animationWidth: 40, animationHeight: 80, delay: 3)
-                        .frame(width: 20, height: 20)
-                        .border(Color.blue, width: 2)
-                        .offset(x: -36, y: 20)
-               }
+            ZStack {
+                QuoteView()
             }
         }
     }
 }
 
 struct MainView: View {
-    @State private var isChangeOffset = false
-    @State private var isChangeOpacity = false
-    
     var body: some View {
         ZStack {
             #if os(macOS)
@@ -84,31 +54,32 @@ struct MainView: View {
             Color(.black).ignoresSafeArea()
             #endif
             
+            // TODO: typewriter effect for quote
             QuoteView()
         }
     }
 }
 
-struct QuoteView: View {
-    @State private var isChangeOffset = false
-    
-    var body: some View {
-        Rectangle().foregroundStyle(Color.blue)
-        
-        RoundedRectangle(cornerRadius: 35)
-            .foregroundStyle(.white)
-            .offset(y: -800)
-        
-        ZStack {
-            Text("Lorem ipsum")
-                .font(.system(size: 35))
-                .fontWeight(.semibold)
-                .foregroundStyle(.white)
-                .multilineTextAlignment(.leading)
-                .frame(width: 350, height: 200)
-        }
-    }
-}
+//struct QuoteView: View {
+//    @State private var isChangeOffset = false
+//    
+//    var body: some View {
+//        Rectangle().foregroundStyle(Color.blue)
+//        
+//        RoundedRectangle(cornerRadius: 35)
+//            .foregroundStyle(.white)
+//            .offset(y: -800)
+//        
+//        ZStack {
+//            Text("Lorem ipsum")
+//                .font(.system(size: 35))
+//                .fontWeight(.semibold)
+//                .foregroundStyle(.white)
+//                .multilineTextAlignment(.leading)
+//                .frame(width: 350, height: 200)
+//        }
+//    }
+//}
 
 #Preview {
     WelcomeView(

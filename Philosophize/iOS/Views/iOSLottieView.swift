@@ -17,6 +17,7 @@ struct iOSLottieView: UIViewRepresentable {
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = loopMode
         animationView.translatesAutoresizingMaskIntoConstraints = false
+//        animationView.backgroundColor = .black
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             animationView.play()
