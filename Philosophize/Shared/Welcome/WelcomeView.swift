@@ -55,6 +55,7 @@ struct MainView: View {
             #endif
             
             // TODO: typewriter effect for quote
+            // TODO: typewriter effect for quote
             QuoteView()
         }
     }
