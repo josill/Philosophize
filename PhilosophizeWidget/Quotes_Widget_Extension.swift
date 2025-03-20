@@ -31,15 +31,15 @@ struct Quotes_Widget_Extension: Widget {
 #Preview(as: .systemSmall) {
     Quotes_Widget_Extension()
 } timeline: {
-    PhilosophizeEntry(date: .now, quote: "The unexamined life is not worth living. - Socrates");
-    PhilosophizeEntry(date: .now, quote: "It is wrong always, everywhere, and for anyone, to believe anything upon insufficient evidence. - William Kingdon Clifford")
+    PhilosophizeEntry(date: .now, quote: Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!, text: "The unexamined life is not worth living. - Socrates"));
+    PhilosophizeEntry(date: .now, quote: Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5E")!, text:"It is wrong always, everywhere, and for anyone, to believe anything upon insufficient evidence. - William Kingdon Clifford"))
 }
 
 #Preview(as: .systemMedium) {
     Quotes_Widget_Extension()
 } timeline: {
-    PhilosophizeEntry(date: .now, quote: "The unexamined life is not worth living. - Socrates");
-    PhilosophizeEntry(date: .now, quote: "It is wrong always, everywhere, and for anyone, to believe anything upon insufficient evidence. - William Kingdon Clifford")
+    PhilosophizeEntry(date: .now, quote: Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!, text: "The unexamined life is not worth living. - Socrates"));
+    PhilosophizeEntry(date: .now, quote: Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5E")!, text:"It is wrong always, everywhere, and for anyone, to believe anything upon insufficient evidence. - William Kingdon Clifford"))
 }
 
 //#Preview(as: .systemLarge) {

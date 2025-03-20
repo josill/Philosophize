@@ -34,6 +34,8 @@ struct GradientBackgroundView<Content: View>: View {
     
     var body: some View {
         ZStack {
+            backgroundColor
+            
             ZStack {
                 ForEach(animator.circles) { circle in
                     MovingCircle(originOffset: circle.position)
@@ -42,10 +44,10 @@ struct GradientBackgroundView<Content: View>: View {
             }
             .blur(radius: blurRadius)
             
-            Circle()
-                .fill(Color.white.opacity(0.2))
-                .frame(width: 200, height: 200)
-                .blur(radius: 40)
+//            Circle()
+//                .fill(Color.white.opacity(0.2))
+//                .frame(width: 200, height: 200)
+//                .blur(radius: 40)
             
             VStack {
                 Spacer()
@@ -59,36 +61,42 @@ struct GradientBackgroundView<Content: View>: View {
                 Spacer()
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
+        .ignoresSafeArea()
+        #if os(macOS)
+        .frame(maxHeight: NSScreen.main.frame.height, maxWidth: NSScreen.main.frame.width)
+        #elseif os(iOS)
+        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)
+        #endif
         .onAppear {
             animateCircles()
         }
     }
     
     private func animateCircles() {
-        withAnimation(.easeInOut(duration: animationSpeed)) {
+        withAnimation(.easeInOut(duration: animationSpeed).repeatForever()) {
             animator.animate()
         }
     }
 }
 
 #Preview {
-    GradientBackgroundView(
-        gradientColors: [
-            Color(red: 0.01, green: 0.02, blue: 0.13),  // Deep midnight blue (almost black)
-            Color(red: 0.05, green: 0.08, blue: 0.25),  // Dark navy blue
-            Color(red: 0.08, green: 0.15, blue: 0.42),  // Medium midnight blue
-            Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
-            Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue (for highlights)
-        ],
-        backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1)  // Rich dark blue
-    ) {
-        VStack(spacing: 10) {
-            Text("11:23")
-                .font(.system(size: 88, weight: .medium, design: .rounded))
-            Text("Tuesday, 18 April")
-                .font(.system(size: 24, weight: .semibold, design: .rounded))
+    NavigationStack {
+        GradientBackgroundView(
+            gradientColors: [
+                Color(red: 0.01, green: 0.02, blue: 0.13),  // Deep midnight blue (almost black)
+                Color(red: 0.05, green: 0.08, blue: 0.25),  // Dark navy blue
+                Color(red: 0.08, green: 0.15, blue: 0.42),  // Medium midnight blue
+                Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
+                Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue (for highlights)
+            ],
+            backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1)  // Rich dark blue
+        ) {
+            VStack(spacing: 10) {
+                Text("11:23")
+                    .font(.system(size: 88, weight: .medium, design: .rounded))
+                Text("Tuesday, 18 April")
+                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+            }
         }
     }
 }

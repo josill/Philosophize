@@ -6,7 +6,7 @@ struct PhilophizeWidgetView: View {
     
     var body: some View {
         ZStack {
-            Text(entry.quote)
+            Text(entry.quote.text)
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .lineSpacing(5)
                 .multilineTextAlignment(.leading)
@@ -16,7 +16,7 @@ struct PhilophizeWidgetView: View {
             Color.black
         }
         // TODO: fix opening the widget
-        .widgetURL(URL(string: "philosophize://quote?id=123")!)
+        .widgetURL(URL(string: "philosophize://quote?id=\(entry.quote.id)")!)
     }
     
     // TODO: family size based font size rendering

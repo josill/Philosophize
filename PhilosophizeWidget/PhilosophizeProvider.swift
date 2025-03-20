@@ -3,7 +3,9 @@ import WidgetKit
 struct PhilosophizeProvider: TimelineProvider {
     private let quotes = Quotes()
     
-    private let placeholderEntry = PhilosophizeEntry(date: Date(), quote: "")
+    private let placeholderEntry = PhilosophizeEntry(
+        date: Date(),
+        quote: Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!, text: ""))
     
     func placeholder(in context: Context) -> PhilosophizeEntry {
         return placeholderEntry

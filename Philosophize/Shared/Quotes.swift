@@ -1,5 +1,10 @@
 import Foundation
 
+struct Quote {
+    let id: UUID
+    let text: String
+}
+
 struct Quotes {
     var list: [Quote] = [
         Quote(id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!, text: "The unexamined life is not worth living. - Socrates"),
