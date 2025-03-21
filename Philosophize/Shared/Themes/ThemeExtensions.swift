@@ -17,6 +17,10 @@ extension Theme {
     func backgroundColor() -> Color {
         Color(background)
     }
+    
+    func gradient() -> Gradient {
+        Gradient(colors: gradientColors)
+    }
    
    func linearGradient(startPoint: UnitPoint = .top, endPoint: UnitPoint = .bottom) -> LinearGradient {
        LinearGradient(

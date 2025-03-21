@@ -29,13 +29,6 @@ struct WelcomeView: View {
 struct SplashScreen: View {
     var body: some View {
         GradientBackgroundView(
-            gradientColors: [
-                Color(red: 0.01, green: 0.02, blue: 0.13),  // Deep midnight blue
-                Color(red: 0.05, green: 0.08, blue: 0.25),  // Dark navy blue
-                Color(red: 0.08, green: 0.15, blue: 0.42),  // Medium midnight blue
-                Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
-                Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue
-            ],
             animationSpeed: 6.0,
             blurRadius: 150,
             glowOpacity: 0.25
