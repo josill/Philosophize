@@ -36,7 +36,6 @@ struct SplashScreen: View {
                 Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
                 Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue
             ],
-            backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1),
             animationSpeed: 6.0,
             blurRadius: 150,
             glowOpacity: 0.25

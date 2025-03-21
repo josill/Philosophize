@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct GradientBackgroundView<Content: View>: View {
+    private let theme: Theme = ThemeManager.shared.currentTheme
+    
     private let animationSpeed: Double
     private let blurRadius: CGFloat
     private let glowOpacity: Double
     
     private let gradientColors: [Color]
-    private let backgroundColor: Color
     
     private let content: Content
     
@@ -22,7 +23,6 @@ struct GradientBackgroundView<Content: View>: View {
     
     init(
         gradientColors: [Color],
-        backgroundColor: Color,
         animationSpeed: Double = 5.5,
         blurRadius: CGFloat = 130,
         glowOpacity: Double = 0.2,
@@ -32,14 +32,13 @@ struct GradientBackgroundView<Content: View>: View {
         self.blurRadius = blurRadius
         self.glowOpacity = glowOpacity
         self.gradientColors = gradientColors
-        self.backgroundColor = backgroundColor
         self.content = content()
     }
     
     var body: some View {
         ZStack {
             // Background with ignoresSafeArea to prevent NavigationStack animation issues
-            backgroundColor
+            Color(theme.colors.background)
                 .ignoresSafeArea()
                 .edgesIgnoringSafeArea(.all)
             
@@ -97,21 +96,50 @@ struct GradientBackgroundView<Content: View>: View {
             .transition(.identity)
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: animationSpeed)) {
+            withAnimation(.easeInOut(duration: animationSpeed).repeatForever()) {
                 stageOpacity = 1
                 stageScale = 2
             }
 
             // Animate the white circle with a slight delay
-            withAnimation(.easeInOut(duration: animationSpeed)) {
+            withAnimation(.easeInOut(duration: animationSpeed).repeatForever()) {
                 whiteCircleOpacity = 0.7
                 whiteCircleScale = 2
             }
             
-            withAnimation(.easeInOut(duration: animationSpeed * 0.8)) {
+            withAnimation(.easeInOut(duration: animationSpeed * 0.8).repeatForever()) {
                 textColorProgress = 1
             }
         }
+    }
+}
+
+struct AutoUpdatingClock: View {
+    @State private var currentDate = Date()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Text(timeString(from: currentDate))
+                .font(.system(size: 88, weight: .medium, design: .rounded))
+            Text(dateString(from: currentDate))
+                .font(.system(size: 24, weight: .semibold, design: .rounded))
+        }
+        .onReceive(timer) { _ in
+            currentDate = Date()
+        }
+    }
+    
+    private func timeString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: date)
+    }
+    
+    private func dateString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM"
+        return formatter.string(from: date)
     }
 }
 
@@ -125,16 +153,10 @@ struct GradientBackgroundView<Content: View>: View {
                 Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
                 Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue (for highlights)
             ],
-            backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1),  // Rich dark blue
             blurRadius: 80,  // Reduced blur for better visibility
             glowOpacity: 0.7  // Increased opacity for better visibility
         ) {
-            VStack(spacing: 10) {
-                Text("11:23")
-                    .font(.system(size: 88, weight: .medium, design: .rounded))
-                Text("Tuesday, 18 April")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-            }
+            AutoUpdatingClock()
         }
     }
 }
