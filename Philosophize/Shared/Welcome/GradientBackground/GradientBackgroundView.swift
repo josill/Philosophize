@@ -8,8 +8,17 @@ struct GradientBackgroundView<Content: View>: View {
     private let gradientColors: [Color]
     private let backgroundColor: Color
     
-    @StateObject private var animator: CircleAnimator
     private let content: Content
+    
+    // Animation state properties
+    @State private var stageOpacity: Double = 0
+    @State private var stageScale: CGFloat = 0.7
+    
+    @State private var whiteCircleOpacity: Double = 0
+    @State private var whiteCircleScale: CGFloat = 0.5
+    
+    // Replace boolean with a progress value for smoother transition
+    @State private var textColorProgress: Double = 0
     
     init(
         gradientColors: [Color],
@@ -22,59 +31,86 @@ struct GradientBackgroundView<Content: View>: View {
         self.animationSpeed = animationSpeed
         self.blurRadius = blurRadius
         self.glowOpacity = glowOpacity
-
         self.gradientColors = gradientColors
         self.backgroundColor = backgroundColor
-        
-        let animator = CircleAnimator(colors: gradientColors)
-        self._animator = StateObject(wrappedValue: animator)
-
         self.content = content()
     }
     
     var body: some View {
         ZStack {
+            // Background with ignoresSafeArea to prevent NavigationStack animation issues
             backgroundColor
+                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.all)
             
-            ZStack {
-                ForEach(animator.circles) { circle in
-                    MovingCircle(originOffset: circle.position)
-                        .foregroundStyle(circle.color)
+            GeometryReader { geometry in
+                ZStack {
+                    // Stage light with fixed position
+                    let smallestDimension = min(geometry.size.width, geometry.size.height)
+                    
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                gradient: Gradient(colors: gradientColors),
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: smallestDimension * 0.7
+                            )
+                        )
+                        .frame(width: min(geometry.size.width, geometry.size.height) * 1.4)
+                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                        .blur(radius: blurRadius / 3)
+                        .opacity(stageOpacity)
+                        .scaleEffect(stageScale)
+                    
+                    Circle()
+                        .fill(Color.white.opacity(whiteCircleOpacity))
+                        .frame(width: 200, height: 200)
+                        .blur(radius: 40)
+                        .opacity(whiteCircleOpacity)
+                        .scaleEffect(whiteCircleScale)
+                    
+                    
+                    VStack {
+                        Spacer()
+                        
+                        // Start with pure white text and transition to black
+                        ZStack {
+                            // White text layer that fades out
+                            content
+                                .foregroundColor(.white)
+                                .opacity(1 - textColorProgress)
+                            
+                            // Black text layer that fades in
+                            content
+                                .foregroundColor(.black)
+                                .opacity(textColorProgress)
+                        }
+                        
+                        Spacer()
+                    }
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                 }
+                .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
-            .blur(radius: blurRadius)
-            
-//            Circle()
-//                .fill(Color.white.opacity(0.2))
-//                .frame(width: 200, height: 200)
-//                .blur(radius: 40)
-            
-            VStack {
-                Spacer()
-                
-                content
-                    .foregroundColor(.white)
-                    .blendMode(.difference)
-                    .overlay(content.blendMode(.hue))
-                    .overlay(content.foregroundColor(.black).blendMode(.overlay))
-                
-                Spacer()
-            }
+            // This prevents the NavigationStack from animating this view
+            .transition(.identity)
         }
-        .ignoresSafeArea()
-        #if os(macOS)
-        .frame(maxHeight: NSScreen.main.frame.height, maxWidth: NSScreen.main.frame.width)
-        #elseif os(iOS)
-        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)
-        #endif
         .onAppear {
-            animateCircles()
-        }
-    }
-    
-    private func animateCircles() {
-        withAnimation(.easeInOut(duration: animationSpeed).repeatForever()) {
-            animator.animate()
+            withAnimation(.easeInOut(duration: animationSpeed)) {
+                stageOpacity = 1
+                stageScale = 2
+            }
+
+            // Animate the white circle with a slight delay
+            withAnimation(.easeInOut(duration: animationSpeed)) {
+                whiteCircleOpacity = 0.7
+                whiteCircleScale = 2
+            }
+            
+            withAnimation(.easeInOut(duration: animationSpeed * 0.8)) {
+                textColorProgress = 1
+            }
         }
     }
 }
@@ -89,7 +125,9 @@ struct GradientBackgroundView<Content: View>: View {
                 Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
                 Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue (for highlights)
             ],
-            backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1)  // Rich dark blue
+            backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1),  // Rich dark blue
+            blurRadius: 80,  // Reduced blur for better visibility
+            glowOpacity: 0.7  // Increased opacity for better visibility
         ) {
             VStack(spacing: 10) {
                 Text("11:23")
