@@ -1,27 +1,18 @@
 import SwiftUI
 
-struct MovingCircle: Shape {
-    var originOffset: CGPoint
+struct MovingCircle: View {
+    let originOffset: CGPoint
+    let opacity: Double
     
-    var animatableData: CGPoint.AnimatableData {
-        get { originOffset.animatableData }
-        set { originOffset.animatableData = newValue }
-    }
-    
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        let adjustedX = rect.width * originOffset.x
-        let adjustedY = rect.height * originOffset.y
-        let smallestDimension = min(rect.width, rect.height)
-        
-        path.addArc(
-            center: CGPoint(x: adjustedX, y: adjustedY),
-            radius: smallestDimension * 0.7,
-            startAngle: .zero,
-            endAngle: .degrees(360),
-            clockwise: true)
-        
-        return path
+    var body: some View {
+        GeometryReader { geometry in
+            Circle()
+                .position(
+                    x: geometry.size.width * originOffset.x,
+                    y: geometry.size.height * originOffset.y
+                )
+                .frame(width: min(geometry.size.width, geometry.size.height) * 1.4)
+                .opacity(opacity)
+        }
     }
 }

@@ -5,36 +5,32 @@ public class CircleAnimator: ObservableObject {
         var position: CGPoint
         let id = UUID().uuidString
         let color: Color
+        var opacity: Double
         
-        internal init(position: CGPoint, color: Color)
-        {
+        internal init(position: CGPoint, color: Color, opacity: Double = 0.0) {
             self.position = position
             self.color = color
+            self.opacity = opacity
         }
     }
         
     @Published private(set) var circles: [Circle] = []
+    @Published private(set) var isAnimated: Bool = false
         
     init(colors: [Color]) {
+        // Initialize circles at center position with 0 opacity
         circles = colors.map({ color in
-            Circle(position: CircleAnimator.generateRandomPosition(), color: color)
+            Circle(position: CGPoint(x: 0.5, y: 0.5), color: color, opacity: 0.0)
         })
     }
 
     func animate() {
-        var newCircles: [Circle] = []
+        // Just update the opacity of existing circles
+        isAnimated = true
         
-        for circle in circles {
-            newCircles.append(Circle(
-                position: CGPoint(x: 0.5, y: 0.5),
-                color: circle.color
-            ))
+        // Update the opacity of each circle
+        for index in circles.indices {
+            circles[index].opacity = 1.0
         }
-        
-        circles = newCircles
-    }
-        
-    static func generateRandomPosition() -> CGPoint {
-        CGPoint(x: CGFloat.random(in: 0...1), y:CGFloat.random(in: 0...1))
     }
 }

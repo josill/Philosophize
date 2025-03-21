@@ -1,19 +1,23 @@
 import SwiftUI
 
 struct GradientBackgroundView<Content: View>: View {
+    private let theme: Theme = ThemeManager.shared.currentTheme
+    
     private let animationSpeed: Double
     private let blurRadius: CGFloat
     private let glowOpacity: Double
     
-    private let gradientColors: [Color]
-    private let backgroundColor: Color
-    
-    @StateObject private var animator: CircleAnimator
     private let content: Content
     
+    @State private var stageOpacity: Double = 0
+    @State private var stageScale: CGFloat = 0.7
+    
+    @State private var whiteCircleOpacity: Double = 0
+    @State private var whiteCircleScale: CGFloat = 0.5
+    
+    @State private var textColorProgress: Double = 0
+    
     init(
-        gradientColors: [Color],
-        backgroundColor: Color,
         animationSpeed: Double = 5.5,
         blurRadius: CGFloat = 130,
         glowOpacity: Double = 0.2,
@@ -22,73 +26,96 @@ struct GradientBackgroundView<Content: View>: View {
         self.animationSpeed = animationSpeed
         self.blurRadius = blurRadius
         self.glowOpacity = glowOpacity
-
-        self.gradientColors = gradientColors
-        self.backgroundColor = backgroundColor
         
-        let animator = CircleAnimator(colors: gradientColors)
-        self._animator = StateObject(wrappedValue: animator)
-
         self.content = content()
     }
     
     var body: some View {
         ZStack {
-            ZStack {
-                ForEach(animator.circles) { circle in
-                    MovingCircle(originOffset: circle.position)
-                        .foregroundStyle(circle.color)
+            theme.backgroundColor()
+                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.all)
+            
+            GeometryReader { geometry in
+                ZStack {
+                    theme.radialGradient(endRadius: 20)
+                        .frame(width: 120, height: 120)
+                        .blur(radius: 40)
+                        .opacity(whiteCircleOpacity)
+                        .scaleEffect(whiteCircleScale)
+                    
+                    
+                    VStack {
+                        Spacer()
+                        
+                        ZStack {
+                            content
+                                .foregroundColor(.black)
+                                .opacity(textColorProgress)
+                        }
+                        
+                        Spacer()
+                    }
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                 }
+                .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
-            .blur(radius: blurRadius)
-            
-            Circle()
-                .fill(Color.white.opacity(0.2))
-                .frame(width: 200, height: 200)
-                .blur(radius: 40)
-            
-            VStack {
-                Spacer()
-                
-                content
-                    .foregroundColor(.white)
-                    .blendMode(.difference)
-                    .overlay(content.blendMode(.hue))
-                    .overlay(content.foregroundColor(.black).blendMode(.overlay))
-                
-                Spacer()
-            }
+            .transition(.identity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
         .onAppear {
-            animateCircles()
-        }
-    }
-    
-    private func animateCircles() {
-        withAnimation(.easeInOut(duration: animationSpeed)) {
-            animator.animate()
+            withAnimation(.easeInOut(duration: animationSpeed)) {
+                stageOpacity = 1
+                stageScale = 2
+            }
+
+            withAnimation(.easeInOut(duration: animationSpeed)) {
+                whiteCircleOpacity = 0.9
+                whiteCircleScale = 2
+            }
+            
+            withAnimation(.easeInOut(duration: animationSpeed * 0.8)) {
+                textColorProgress = 1
+            }
         }
     }
 }
 
-#Preview {
-    GradientBackgroundView(
-        gradientColors: [
-            Color(red: 0.01, green: 0.02, blue: 0.13),  // Deep midnight blue (almost black)
-            Color(red: 0.05, green: 0.08, blue: 0.25),  // Dark navy blue
-            Color(red: 0.08, green: 0.15, blue: 0.42),  // Medium midnight blue
-            Color(red: 0.18, green: 0.28, blue: 0.65),  // Electric blue
-            Color(red: 0.35, green: 0.50, blue: 0.85)   // Bright electric blue (for highlights)
-        ],
-        backgroundColor: Color(red: 0.015, green: 0.025, blue: 0.1)  // Rich dark blue
-    ) {
+struct AutoUpdatingClock: View {
+    @State private var currentDate = Date()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
         VStack(spacing: 10) {
-            Text("11:23")
+            Text(timeString(from: currentDate))
                 .font(.system(size: 88, weight: .medium, design: .rounded))
-            Text("Tuesday, 18 April")
+            Text(dateString(from: currentDate))
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
+        }
+        .onReceive(timer) { _ in
+            currentDate = Date()
+        }
+    }
+    
+    private func timeString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: date)
+    }
+    
+    private func dateString(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM"
+        return formatter.string(from: date)
+    }
+}
+
+#Preview {
+    NavigationStack {
+        GradientBackgroundView(
+            blurRadius: 80,
+            glowOpacity: 0.7
+        ) {
+            AutoUpdatingClock()
         }
     }
 }

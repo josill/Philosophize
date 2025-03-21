@@ -8,16 +8,74 @@
 
 /* Begin PBXBuildFile section */
 		22ABE8912D85EC4C00B6AC35 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 22ABE8902D85EC4C00B6AC35 /* Lottie */; };
+		22AC224B2D8A0AD300D04E36 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AC224A2D8A0AD300D04E36 /* WidgetKit.framework */; };
+		22AC224D2D8A0AD300D04E36 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AC224C2D8A0AD300D04E36 /* SwiftUI.framework */; };
+		22AC22592D8A0AD500D04E36 /* PhilosophizeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 22AC22482D8A0AD300D04E36 /* PhilosophizeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		22AC22572D8A0AD500D04E36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22ABE8622D85E3DD00B6AC35 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22AC22472D8A0AD300D04E36;
+			remoteInfo = PhilosophizeWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		22AC225A2D8A0AD500D04E36 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				22AC22592D8A0AD500D04E36 /* PhilosophizeWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		22ABE86A2D85E3DD00B6AC35 /* Philosophize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Philosophize.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22AC22482D8A0AD300D04E36 /* PhilosophizeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PhilosophizeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		22AC224A2D8A0AD300D04E36 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
+		22AC224C2D8A0AD300D04E36 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		22796FD22D8A23EC0031F472 /* Exceptions for "Philosophize" folder in "Philosophize" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 22ABE8692D85E3DD00B6AC35 /* Philosophize */;
+		};
+		22AC225D2D8A0AD500D04E36 /* Exceptions for "PhilosophizeWidget" folder in "PhilosophizeWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 22AC22472D8A0AD300D04E36 /* PhilosophizeWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		22ABE86C2D85E3DD00B6AC35 /* Philosophize */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				22796FD22D8A23EC0031F472 /* Exceptions for "Philosophize" folder in "Philosophize" target */,
+			);
 			path = Philosophize;
+			sourceTree = "<group>";
+		};
+		22AC224E2D8A0AD300D04E36 /* PhilosophizeWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				22AC225D2D8A0AD500D04E36 /* Exceptions for "PhilosophizeWidget" folder in "PhilosophizeWidgetExtension" target */,
+			);
+			path = PhilosophizeWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +89,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		22AC22452D8A0AD300D04E36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22AC224D2D8A0AD300D04E36 /* SwiftUI.framework in Frameworks */,
+				22AC224B2D8A0AD300D04E36 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -38,6 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				22ABE86C2D85E3DD00B6AC35 /* Philosophize */,
+				22AC224E2D8A0AD300D04E36 /* PhilosophizeWidget */,
+				22AC22492D8A0AD300D04E36 /* Frameworks */,
 				22ABE86B2D85E3DD00B6AC35 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,8 +115,18 @@
 			isa = PBXGroup;
 			children = (
 				22ABE86A2D85E3DD00B6AC35 /* Philosophize.app */,
+				22AC22482D8A0AD300D04E36 /* PhilosophizeWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		22AC22492D8A0AD300D04E36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22AC224A2D8A0AD300D04E36 /* WidgetKit.framework */,
+				22AC224C2D8A0AD300D04E36 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,10 +139,12 @@
 				22ABE8662D85E3DD00B6AC35 /* Sources */,
 				22ABE8672D85E3DD00B6AC35 /* Frameworks */,
 				22ABE8682D85E3DD00B6AC35 /* Resources */,
+				22AC225A2D8A0AD500D04E36 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				22AC22582D8A0AD500D04E36 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				22ABE86C2D85E3DD00B6AC35 /* Philosophize */,
@@ -75,6 +156,28 @@
 			productName = Philosophize;
 			productReference = 22ABE86A2D85E3DD00B6AC35 /* Philosophize.app */;
 			productType = "com.apple.product-type.application";
+		};
+		22AC22472D8A0AD300D04E36 /* PhilosophizeWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22AC225E2D8A0AD500D04E36 /* Build configuration list for PBXNativeTarget "PhilosophizeWidgetExtension" */;
+			buildPhases = (
+				22AC22442D8A0AD300D04E36 /* Sources */,
+				22AC22452D8A0AD300D04E36 /* Frameworks */,
+				22AC22462D8A0AD300D04E36 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				22AC224E2D8A0AD300D04E36 /* PhilosophizeWidget */,
+			);
+			name = PhilosophizeWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = PhilosophizeWidgetExtension;
+			productReference = 22AC22482D8A0AD300D04E36 /* PhilosophizeWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -88,6 +191,10 @@
 				TargetAttributes = {
 					22ABE8692D85E3DD00B6AC35 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					22AC22472D8A0AD300D04E36 = {
+						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
@@ -109,12 +216,20 @@
 			projectRoot = "";
 			targets = (
 				22ABE8692D85E3DD00B6AC35 /* Philosophize */,
+				22AC22472D8A0AD300D04E36 /* PhilosophizeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		22ABE8682D85E3DD00B6AC35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22AC22462D8A0AD300D04E36 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -131,7 +246,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		22AC22442D8A0AD300D04E36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		22AC22582D8A0AD500D04E36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22AC22472D8A0AD300D04E36 /* PhilosophizeWidgetExtension */;
+			targetProxy = 22AC22572D8A0AD500D04E36 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		22ABE8792D85E3DF00B6AC35 /* Debug */ = {
@@ -261,6 +391,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Philosophize/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -300,6 +431,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Philosophize/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -326,6 +458,87 @@
 			};
 			name = Release;
 		};
+		22AC225B2D8A0AD500D04E36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PhilosophizeWidget/PhilosophizeWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2US4L4HG86;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PhilosophizeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PhilosophizeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jonathan.Philosophize.PhilosophizeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		22AC225C2D8A0AD500D04E36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PhilosophizeWidget/PhilosophizeWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2US4L4HG86;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PhilosophizeWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PhilosophizeWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jonathan.Philosophize.PhilosophizeWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,6 +556,15 @@
 			buildConfigurations = (
 				22ABE87C2D85E3DF00B6AC35 /* Debug */,
 				22ABE87D2D85E3DF00B6AC35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22AC225E2D8A0AD500D04E36 /* Build configuration list for PBXNativeTarget "PhilosophizeWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22AC225B2D8A0AD500D04E36 /* Debug */,
+				22AC225C2D8A0AD500D04E36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

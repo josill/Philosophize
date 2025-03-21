@@ -3,9 +3,9 @@ import SwiftUI
 struct QuoteView: View {
     var body: some View {
         #if os(macOS)
-        macOSQuoteView()
+        macOSQuoteView() // TODO: mplement typewriter
         #else
-        iOSQuoteView()
+        iOSQuoteView(text: "The unexamined life is a life not worth living. - Socrates") // TODO: move outside
         #endif
     }
 }
