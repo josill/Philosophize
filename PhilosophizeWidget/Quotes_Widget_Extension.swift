@@ -21,9 +21,10 @@ struct Quotes_Widget_Extension: Widget {
             .systemMedium,
             .systemLarge,
             .systemExtraLarge,
-            .accessoryInline,
-            .accessoryCircular,
-            .accessoryRectangular
+            // not supported on mac
+//            .accessoryInline,
+//            .accessoryCircular,
+//            .accessoryRectangular
         ])
     }
 }

@@ -9,13 +9,10 @@ struct GradientBackgroundView<Content: View>: View {
     
     private let content: Content
     
-    @State private var stageOpacity: Double = 0
-    @State private var stageScale: CGFloat = 0.7
+    @State private var spotlightOpacity: Double = 0
+    @State private var spotlightScale: CGFloat = 0.5
     
-    @State private var whiteCircleOpacity: Double = 0
-    @State private var whiteCircleScale: CGFloat = 0.5
-    
-    @State private var textColorProgress: Double = 0
+    @State private var contentOpacity: Double = 0
     
     init(
         animationSpeed: Double = 5.5,
@@ -41,8 +38,8 @@ struct GradientBackgroundView<Content: View>: View {
                     theme.radialGradient(endRadius: 20)
                         .frame(width: 120, height: 120)
                         .blur(radius: 40)
-                        .opacity(whiteCircleOpacity)
-                        .scaleEffect(whiteCircleScale)
+                        .opacity(spotlightOpacity)
+                        .scaleEffect(spotlightScale)
                     
                     
                     VStack {
@@ -50,8 +47,7 @@ struct GradientBackgroundView<Content: View>: View {
                         
                         ZStack {
                             content
-                                .foregroundColor(.black)
-                                .opacity(textColorProgress)
+                                .opacity(contentOpacity)
                         }
                         
                         Spacer()
@@ -63,19 +59,21 @@ struct GradientBackgroundView<Content: View>: View {
             .transition(.identity)
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: animationSpeed)) {
-                stageOpacity = 1
-                stageScale = 2
-            }
-
-            withAnimation(.easeInOut(duration: animationSpeed)) {
-                whiteCircleOpacity = 0.9
-                whiteCircleScale = 2
-            }
-            
-            withAnimation(.easeInOut(duration: animationSpeed * 0.8)) {
-                textColorProgress = 1
-            }
+            animateSpotlightFadeIn()
+            animateContentFadeIn()
+        }
+    }
+    
+    func animateSpotlightFadeIn() {
+        withAnimation(.easeInOut(duration: animationSpeed)) {
+            spotlightOpacity = 0.9
+            spotlightScale = 2
+        }
+    }
+    
+    func animateContentFadeIn() {
+        withAnimation(.easeInOut(duration: animationSpeed)) {
+            contentOpacity = 1
         }
     }
 }

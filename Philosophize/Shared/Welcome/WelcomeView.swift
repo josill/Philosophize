@@ -18,11 +18,6 @@ struct WelcomeView: View {
                 }
             }
         }
-#if os(macOS)
-.frame(maxHeight: NSScreen.main.frame.height, maxWidth: NSScreen.main.frame.width)
-#elseif os(iOS)
-.frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)
-#endif
     }
 }
 
@@ -43,12 +38,6 @@ struct SplashScreen: View {
 struct MainView: View {
     var body: some View {
         ZStack {
-            #if os(macOS)
-            Color(NSColor.windowBackgroundColor).ignoresSafeArea()
-            #elseif os(iOS)
-            Color(.black).ignoresSafeArea()
-            #endif
-        
             QuoteView()
         }
     }
