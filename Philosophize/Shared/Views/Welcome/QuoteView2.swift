@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct QuoteView: View {
+struct QuoteView2: View {
     var body: some View {
         #if os(macOS)
         macOSQuoteView(text: "The unexamined life is a life not worth living. - Socrates")

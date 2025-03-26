@@ -29,7 +29,7 @@ struct SplashScreen: View {
             glowOpacity: 0.25
         ) {
             ZStack {
-                QuoteView()
+                QuoteView2()
             }
         }
     }
@@ -38,7 +38,7 @@ struct SplashScreen: View {
 struct MainView: View {
     var body: some View {
         ZStack {
-            QuoteView()
+            QuoteView2()
         }
     }
 }

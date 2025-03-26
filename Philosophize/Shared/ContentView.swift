@@ -3,23 +3,25 @@ import SwiftData
 
 struct ContentView: View {
     @ObservedObject private var themeManager = ThemeManager.shared
+    @ObservedObject private var router = Router.shared
+    @ObservedObject private var deepLinkHandler = DeepLinkHandler.shared
     
     @Environment(\.modelContext) private var modelContext
     
-    @State private var linkActive = false
-    @State private var selectedQuoteId: String?
-    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.path) {
             WelcomeView()
-                .environmentObject(themeManager)
-                .onOpenURL { url in
-                    print("Received deep link: \(url)")
-                    linkActive = true
+            .environmentObject(themeManager)
+            .onOpenURL { url in
+                deepLinkHandler.handleDeepLink(url)
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .welcome: WelcomeView()
+                case .quote(let id): Text("Quote detail view for \(id)")
+                case .notFound: NotFoundView()
                 }
-                .navigationDestination(isPresented: $linkActive) {
-                    Text("Quote detail view")
-                }
+            }
         }
     }
 }
