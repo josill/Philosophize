@@ -29,7 +29,7 @@ struct SplashScreen: View {
             glowOpacity: 0.25
         ) {
             ZStack {
-                QuoteView2()
+                QuoteView(quote: "The unexamined life is a life not worth living. - Socrates")
             }
         }
     }
@@ -38,7 +38,7 @@ struct SplashScreen: View {
 struct MainView: View {
     var body: some View {
         ZStack {
-            QuoteView2()
+            QuoteView(quote: "The unexamined life is a life not worth living. - Socrates")
         }
     }
 }

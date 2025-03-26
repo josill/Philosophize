@@ -18,7 +18,7 @@ struct ContentView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .welcome: WelcomeView()
-                case .quote(let id): Text("Quote detail view for \(id)")
+                case .quote(let id): QuoteDetailView(quoteId: id)
                 case .notFound: NotFoundView()
                 }
             }

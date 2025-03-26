@@ -1,11 +1,13 @@
 import SwiftUI
 
-struct QuoteView2: View {
+struct QuoteView: View {
+    let quote: String
+    
     var body: some View {
         #if os(macOS)
-        macOSQuoteView(text: "The unexamined life is a life not worth living. - Socrates")
+        macOSQuoteView(text: quote)
         #else
-        iOSQuoteView(text: "The unexamined life is a life not worth living. - Socrates")
+        iOSQuoteView(text: quote)
         #endif
     }
 }
