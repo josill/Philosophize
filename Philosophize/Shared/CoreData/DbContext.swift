@@ -1,7 +1,7 @@
 import CoreData
 
-class CoreDataService {
-    static let shared = CoreDataService()
+class DbContext {
+    static let shared = DbContext()
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Philosophize")
@@ -9,7 +9,7 @@ class CoreDataService {
             if let error = error as NSError? {
                 print("CoreData error: \(error), \(error.userInfo)")
             } else {
-                self.seedDatabase()
+//                self.seedDatabase()
             }
         })
         return container

@@ -6,7 +6,7 @@ struct ContentView: View {
     @ObservedObject private var router = Router.shared
     @ObservedObject private var deepLinkHandler = DeepLinkHandler.shared
     
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -28,5 +28,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

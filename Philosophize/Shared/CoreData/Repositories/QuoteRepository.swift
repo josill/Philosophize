@@ -2,20 +2,19 @@ import CoreData
 
 // TODO: Add interface (protocol) implementation and create generic repostiory classes
 class QuoteRepository {
-    private let coreDataService: CoreDataService
+    private let context: NSManagedObjectContext
     
-    init(coreDataService: CoreDataService) {
-        self.coreDataService = coreDataService
+    init(coreDataStack: CoreDataStack) {
+        self.context = coreDataStack.context
     }
     
-    func get(byId id: UUID) -> Quote? {
-        let context = coreDataService.mainContext
-        let fetchRequest = NSFetchRequest<Quote>(entityName: "Quote")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+    func getQuoteById(id: UUID) -> Quote? {
+        let request = Quote.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         
         do {
-            let results = try context.fetch(fetchRequest)
-            return results.first
+            let items = try context.fetch(request)
+            return items.first
         } catch {
             print("Failed to fetch quote: \(error)")
             return nil
