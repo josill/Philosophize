@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct QuoteDetailView: View {
+    private let repository = QuoteRepository.shared
     @ObservedObject private var router = Router.shared
 
     @State private var quote: Quote?
@@ -8,11 +9,9 @@ struct QuoteDetailView: View {
     @State private var showMetadata = false
  
     private let quoteId: UUID
-    private let quoteRepository: QuoteRepository
     
     init(quoteId: UUID) {
         self.quoteId = quoteId
-        self.quoteRepository = QuoteRepository(coreDataStack: CoreDataStack.shared)
     }
 
     var body: some View {
@@ -21,11 +20,6 @@ struct QuoteDetailView: View {
                 ProgressView("Loading quote...")
             } else if let quoteText = quote?.text {
                 QuoteView(quote: quoteText)
-            } else {
-                Color.clear
-                .onAppear {
-                    router.navigate(to: .notFound)
-                }
             }
         }
         .padding()
@@ -39,7 +33,12 @@ struct QuoteDetailView: View {
     
     private func fetchQuote() {
         isLoading = true
-        quote = quoteRepository.getQuoteById(id: quoteId)
+        
+        quote = repository.getQuoteById(id: quoteId)
+        if (quote == nil) {
+            router.navigate(to: .notFound)
+        }
+        
         isLoading = false
     }
 }

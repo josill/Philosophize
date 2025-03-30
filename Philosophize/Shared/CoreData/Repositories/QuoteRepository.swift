@@ -2,12 +2,15 @@ import CoreData
 
 // TODO: Add interface (protocol) implementation and create generic repostiory classes
 class QuoteRepository {
+    static let shared = QuoteRepository(coreDataStack: CoreDataStack.shared)
+
     private let context: NSManagedObjectContext
     
     init(coreDataStack: CoreDataStack) {
         self.context = coreDataStack.context
     }
     
+    /// Get quote by id
     func getQuoteById(id: UUID) -> Quote? {
         let request = Quote.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)

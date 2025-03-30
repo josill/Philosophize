@@ -25,18 +25,18 @@ class CoreDataStack: ObservableObject {
 }
 
 extension CoreDataStack {
+    /// Save change to the database
     func save() {
         guard context.hasChanges else { return }
         
         do {
-            // Attempt to save changes.
             try context.save()
         } catch {
-            // Handle the error appropriately.
             print("Failed to save the context:", error.localizedDescription)
         }
     }
     
+    /// Fetch entity from database
     func fetch<T: NSManagedObject>(_ entity: T.Type,
                                   predicate: NSPredicate? = nil,
                                   sortDescriptors: [NSSortDescriptor]? = nil,
