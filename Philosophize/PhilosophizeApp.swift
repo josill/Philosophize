@@ -11,6 +11,10 @@ import CoreData
 @main
 struct PhilosophizeApp: App {
     @StateObject private var coreDataStack = CoreDataStack.shared
+    
+    init() {
+        Seeder.shared.seedData()
+    }
 
     var body: some Scene {
         WindowGroup {

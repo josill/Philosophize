@@ -7,7 +7,7 @@ struct QuoteDetailView: View {
     @State private var quote: Quote?
     @State private var isLoading = true
     @State private var showMetadata = false
- 
+    
     private let quoteId: UUID
     
     init(quoteId: UUID) {
@@ -15,14 +15,16 @@ struct QuoteDetailView: View {
     }
 
     var body: some View {
-        VStack {
+        ThemeStack {
             if isLoading {
                 ProgressView("Loading quote...")
             } else if let quoteText = quote?.text {
                 QuoteView(quote: quoteText)
+                    .onTapGesture {
+                        showMetadata = true
+                    }
             }
         }
-        .padding()
         .onAppear {
             fetchQuote()
         }
@@ -34,12 +36,16 @@ struct QuoteDetailView: View {
     private func fetchQuote() {
         isLoading = true
         
-        quote = repository.getQuoteById(id: quoteId)
-        if (quote == nil) {
-            router.navigate(to: .notFound)
+        repository.getQuoteByIdAsync(id: quoteId) { result in
+            switch result {
+            case .success(let loadedQuote):
+                quote = loadedQuote
+            case .failure(let error):
+                router.navigate(to: .notFound)
+            }
+            
+            self.isLoading = false
         }
-        
-        isLoading = false
     }
 }
 
