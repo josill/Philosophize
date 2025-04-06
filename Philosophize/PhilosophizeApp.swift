@@ -6,27 +6,21 @@
 //
 
 import SwiftUI
-import SwiftData
+import CoreData
 
 @main
 struct PhilosophizeApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @StateObject private var coreDataStack = CoreDataStack.shared
+    
+    init() {
+        Seeder.shared.seedData()
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext,
+                              coreDataStack.persistentContainer.viewContext)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

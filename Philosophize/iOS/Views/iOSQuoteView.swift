@@ -2,42 +2,63 @@ import SwiftUI
 
 #if os(iOS)
 struct iOSQuoteView: View {
+    let theme: Theme = ThemeManager.shared.currentTheme
+    
+    let text: String
+    @State private var textOpacity: Double = 0
+    @State private var displayCharacters = ""
+    @State private var shouldStartTyping = false
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    var onAnimationComplete: (() -> Void)?
+    
     var body: some View {
-        HStack(spacing: 0) {
-            QuoteMarkView()
-                .frame(width: 20, height: 20)
-                .border(Color.blue, width: 2)
-                .offset(x: 15, y: -110)
-            QuoteMarkView(delay: 1)
-                .frame(width: 20, height: 20)
-                .border(Color.blue, width: 2)
-                .offset(x: 10, y: -110)
-            
-            // TODO: make the gradient from circle to an oval
-            // so it would make the entire quote turn from white to black
-            
-            Text("The unexamined life is a life not worth living.\n- Socrates")
-                .frame(width: UIScreen.main.bounds.width / 1.2)
-                .font(.system(size: 36, weight: .bold, design: .rounded))
-                .lineSpacing(5)
-                .multilineTextAlignment(.leading)
-                .border(Color.blue, width: 2)
-            
-            QuoteMarkView(delay: 2)
-                .frame(width: 20, height: 20)
-                .border(Color.blue, width: 2)
-                .offset(x: -110, y: -10)
-            QuoteMarkView(delay: 3)
-                .frame(width: 20, height: 20)
-                .border(Color.blue, width: 2)
-                .offset(x: -115, y: -10)
+        HStack {
+            if shouldStartTyping {
+                Text(displayCharacters)
+                    .frame(width: UIScreen.main.bounds.width / 1.2)
+                    .foregroundColor(theme.text)
+                    .opacity(textOpacity)
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .lineSpacing(5)
+                    .multilineTextAlignment(.leading)
+                    .onReceive(timer) { _ in
+                        renderCharacters();
+                    }
+            }
         }
         .frame(width: UIScreen.main.bounds.width / 2)
+        .onAppear {
+            startTypeWriterAnimation()
+        }
+    }
+    
+    func startTypeWriterAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            shouldStartTyping = true
+            textOpacity = 0
+        }
+    }
+    
+    func renderCharacters() {
+        if displayCharacters.count < text.count {
+            let index = text.index(text.startIndex, offsetBy: displayCharacters.count)
+            displayCharacters.append(text[index])
+            
+            withAnimation(.easeInOut(duration: 0.2)) {
+                textOpacity = Double(displayCharacters.count) / Double(text.count)
+            }
+        } else {
+            onAnimationComplete?()
+        }
     }
 }
 
 #Preview {
-    iOSQuoteView()
+    ZStack {
+        Color.black.ignoresSafeArea(.all)
+        iOSQuoteView(text: "The unexamined life is a life not worth living. - Socrates")
+    }
 }
 
 #endif

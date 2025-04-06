@@ -1,11 +1,15 @@
 import SwiftUI
 
 struct QuoteView: View {
+    let quote: String
+    
+    var onAnimationComplete: (() -> Void)?
+    
     var body: some View {
         #if os(macOS)
-        macOSQuoteView()
+        macOSQuoteView(text: quote)
         #else
-        iOSQuoteView()
+        iOSQuoteView(text: quote, onAnimationComplete: onAnimationComplete)
         #endif
     }
 }
