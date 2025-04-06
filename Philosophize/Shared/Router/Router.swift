@@ -1,11 +1,14 @@
 import SwiftUI
 
 class Router: ObservableObject {
-    @Published var path = NavigationPath()
+    @Published var path: [Route] = []
     
     static let shared = Router()
     
     func navigate(to route: Route) {
+        if let currentRoute = path.last, currentRoute == route {
+            return
+        }
         path.append(route)
     }
     
@@ -16,6 +19,6 @@ class Router: ObservableObject {
     }
     
     func backToRoot() {
-        path = NavigationPath()
+        path.removeAll()
     }
 }

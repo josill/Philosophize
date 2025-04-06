@@ -10,6 +10,8 @@ struct iOSQuoteView: View {
     @State private var shouldStartTyping = false
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
+    var onAnimationComplete: (() -> Void)?
+    
     var body: some View {
         HStack {
             if shouldStartTyping {
@@ -46,6 +48,8 @@ struct iOSQuoteView: View {
             withAnimation(.easeInOut(duration: 0.2)) {
                 textOpacity = Double(displayCharacters.count) / Double(text.count)
             }
+        } else {
+            onAnimationComplete?()
         }
     }
 }

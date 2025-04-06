@@ -18,7 +18,8 @@ struct ContentView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .welcome: WelcomeView()
-                case .quote(let id): QuoteDetailView(quoteId: id).navigationBarBackButtonHidden(true) 
+                case .home: HomeView().navigationBarBackButtonHidden(true)
+                case .quote(let id): QuoteDetailView(quoteId: id).navigationBarBackButtonHidden(true)
                 case .notFound: NotFoundView()
                 }
             }

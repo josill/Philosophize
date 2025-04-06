@@ -1,44 +1,48 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @State private var isSplashScreen = true
-
+    @State private var showMainView = false
+    @State private var showWelcomeButton = false
+    
+    func onAnimationComplete() -> Void {
+        showWelcomeButton = true
+    }
+    
     var body: some View {
         ZStack {
             Group {
-                if isSplashScreen {
-                    SplashScreen()
-                        .onAppear() {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                                isSplashScreen = true
-                            })
+                GradientBackgroundView {
+                    ZStack {
+                        QuoteView(
+                            quote: "The unexamined life is a life not worth living. - Socrates",
+                            onAnimationComplete: onAnimationComplete)
+                    }
+                }
+                
+                VStack {
+                    Spacer()
+                    
+                    if showWelcomeButton {
+                        WelcomeViewButton {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showMainView = true
+                            }
                         }
-                } else {
-                    MainView()
+                        .transition(.opacity.combined(with: .scale))
+                    }
+                    
+                    Spacer().frame(height: 60)
                 }
             }
-        }
-    }
-}
-
-struct SplashScreen: View {
-    var body: some View {
-        GradientBackgroundView(
-            animationSpeed: 6.0,
-            blurRadius: 150,
-            glowOpacity: 0.25
-        ) {
-            ZStack {
-                QuoteView(quote: "The unexamined life is a life not worth living. - Socrates")
+            .opacity(showMainView ? 0 : 1)
+            
+            if showMainView {
+                PhilosopherSelectView()
+                    .transition(.asymmetric(
+                        insertion: .opacity.combined(with: .scale(scale: 1.05)).animation(.easeInOut(duration: 2.5)),
+                        removal: .opacity.animation(.easeOut(duration: 0.5))
+                    ))
             }
-        }
-    }
-}
-
-struct MainView: View {
-    var body: some View {
-        ZStack {
-            QuoteView(quote: "The unexamined life is a life not worth living. - Socrates")
         }
     }
 }

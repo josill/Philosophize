@@ -37,10 +37,11 @@ struct QuoteDetailView: View {
         isLoading = true
         
         repository.getQuoteByIdAsync(id: quoteId) { result in
+            print("quote is : \(result)")
             switch result {
             case .success(let loadedQuote):
                 quote = loadedQuote
-            case .failure(let error):
+            case .failure:
                 router.navigate(to: .notFound)
             }
             

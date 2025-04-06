@@ -15,9 +15,9 @@ struct GradientBackgroundView<Content: View>: View {
     @State private var contentOpacity: Double = 0
     
     init(
-        animationSpeed: Double = 5.5,
-        blurRadius: CGFloat = 130,
-        glowOpacity: Double = 0.2,
+        animationSpeed: Double = 6,
+        blurRadius: CGFloat = 150,
+        glowOpacity: Double = 0.25,
         @ViewBuilder content: () -> Content
     ) {
         self.animationSpeed = animationSpeed

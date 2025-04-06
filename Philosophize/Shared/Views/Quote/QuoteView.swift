@@ -3,11 +3,13 @@ import SwiftUI
 struct QuoteView: View {
     let quote: String
     
+    var onAnimationComplete: (() -> Void)?
+    
     var body: some View {
         #if os(macOS)
         macOSQuoteView(text: quote)
         #else
-        iOSQuoteView(text: quote)
+        iOSQuoteView(text: quote, onAnimationComplete: onAnimationComplete)
         #endif
     }
 }
